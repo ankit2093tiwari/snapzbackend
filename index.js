@@ -849,6 +849,7 @@ app.get("/api/questions/100", authenticationMiddleware, (req, res) => {
 
 // FILTER API VERSION 3
 app.get("/categories/filter3", authenticationMiddleware, (req, res) => {
+  
   const query = `
     SELECT id, name, parent
     FROM mdl8m_question_categories
@@ -857,7 +858,7 @@ app.get("/categories/filter3", authenticationMiddleware, (req, res) => {
   pool.query(query, (err, results) => {
     if (err) {
       console.error("Error executing MySQL query: ", err);
-      res.status(500).json({ error: "Internal server error" });
+      res.status(500).json({ error: "Error executing MySQL query: ", err });
       return;
     }
 

@@ -965,7 +965,7 @@ app.get(
               question_type,
               answers: [],
               correct_answer: null,
-              tag_id,
+              tagid,
             };
           }
 
@@ -978,7 +978,7 @@ app.get(
 
           if (fraction === 1) {
             questions[question_id].correct_answer = answer_id;
-            questions[question_id].tag_id = tagid;
+            questions[question_id].tagid = tagid;
           }
         });
 

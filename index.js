@@ -87,7 +87,7 @@ const authenticationMiddleware = (req, res, next) => {
 };
 
 const corsOptions = {
-    origin: '*',
+    origin: true,
     credentials: true,
     allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],

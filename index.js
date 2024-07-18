@@ -626,7 +626,7 @@ app.get(
               question_type,
               answers: [],
               correct_answer: null,
-              tag_id:null,
+              tagid:null,
             };
           }
 
@@ -638,7 +638,7 @@ app.get(
           }
 
           if (fraction === 1) {
-            questions[question_id].tag_id = tagid;
+            questions[question_id].tagid = tagid;
             questions[question_id].correct_answer = answer_id;
           }
         });
@@ -688,7 +688,7 @@ app.get("/api/questions/random", authenticationMiddleware, (req, res) => {
             question_type,
             answers: [],
             correct_answer: null,
-            tag_id:null,
+            tagid:null,
           };
         }
 
@@ -698,7 +698,7 @@ app.get("/api/questions/random", authenticationMiddleware, (req, res) => {
         });
 
         if (fraction === 1) {
-          questions[question_id].tag_id = tagid;
+          questions[question_id].tagid = tagid;
           questions[question_id].correct_answer = answer_id;
         }
       });

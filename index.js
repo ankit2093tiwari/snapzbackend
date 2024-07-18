@@ -933,11 +933,11 @@ app.get(
       ORDER BY questioncategoryid ASC
     `;
     }
-
+    console.error("query:", query);
     pool.query(query, [categoryId], (error, results) => {
       if (error) {
         console.error("Error fetching questions:", error);
-        res.status(500).json({ error: "Internal server error" });
+        res.status(500).json({ error: "Internal server error"+ query });
       } else {
         const questions = {};
 

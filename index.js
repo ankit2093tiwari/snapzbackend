@@ -86,11 +86,15 @@ const authenticationMiddleware = (req, res, next) => {
   }
 };
 
-app.use(
-  cors({
-    origin: true,
+const corsOptions = {
+    origin: '*',
     credentials: true,
-  })
+    allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+};
+
+app.use(
+  cors(corsOptions)
 );
 
 app.use(bodyParser.json());

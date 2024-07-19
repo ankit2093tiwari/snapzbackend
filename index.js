@@ -1072,9 +1072,10 @@ app.get("/api/tags", (req, res) => {
     JOIN mdl8m_tag_instance ti ON ti.itemid = q.id 
     WHERE ti.tagid = ?;
   `;
-
+console.log('tag query', query);
   // Execute the SQL query with the fixed tag ID
   pool.query(query, [tagId], (error, results) => {
+    console.log('tag query 1', query);
     if (error) {
       console.error("Error fetching data:", error);
       res.status(500).json({ error: "Internal Server Error" });

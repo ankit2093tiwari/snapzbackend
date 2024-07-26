@@ -938,7 +938,7 @@ app.get(
       ORDER BY questioncategoryid ASC
     `;
     }
-    console.error("query:", query);
+    console.error("query:", query, categoryId, name);
     pool.query(query, [categoryId], (error, results) => {
       if (error) {
         console.error("Error fetching questions:", error);

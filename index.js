@@ -18,7 +18,10 @@ const pool = mysql.createPool({
   host: '65.60.61.250',
   user: 'tempor47_mood783',
   password: '!@0S7p41Pe',
-  database: 'tempor47_quiz_print',
+ // database: 'tempor47_quiz_print',
+   database: 'tempor47_mood783',
+
+  
 })
 // const pool = mysql.createPool({
 //   host: "localhost",

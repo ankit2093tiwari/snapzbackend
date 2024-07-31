@@ -238,8 +238,6 @@ app.get("/questions", authenticationMiddleware, (req, res) => {
       return;
     }
 
-    console.log("Query Result:", result);
-
     const uniqueQuestionIds = new Set();
     const questionList = [];
 
@@ -436,8 +434,7 @@ app.get("/api/questions", authenticationMiddleware, (req, res) => {
   `;
 
   pool.query(query, (error, results) => {
-    if (error) {
-      console.error("Error fetching questions:", error);
+    if (error) {    
       res.status(500).json({ error: "Internal server error" });
     } else {
       const questions = {};
@@ -473,7 +470,6 @@ app.get("/api/questions", authenticationMiddleware, (req, res) => {
       });
 
       const questionList = Object.values(questions);
-
       res.json(questionList);
     }
   });
@@ -487,11 +483,7 @@ app.get("/quiz/questions/:id", authenticationMiddleware, (req, res) => {
   const query = `
   
   SELECT q.id AS questionid, q.questiontext, q.name AS questionname, q.qtype AS questiontype, qa.answer AS correctanswer, GROUP_CONCAT(qas.answer) AS options FROM mdl8m_quiz_slots slot LEFT JOIN mdl8m_question_bank_entries qbe ON qbe.id = slot.id LEFT JOIN mdl8m_question_versions qv ON qv.questionbankentryid = qbe.id LEFT JOIN mdl8m_question q ON q.id = qv.questionid LEFT JOIN mdl8m_question_answers qa ON qa.question = q.id AND qa.fraction > 0 LEFT JOIN mdl8m_question_answers qas ON qas.question = q.id WHERE slot.quizid = ? GROUP BY q.id;
-
-
-
-
-  `;
+`;
 
   pool.query(query, [quizId], (error, results) => {
     if (error) {

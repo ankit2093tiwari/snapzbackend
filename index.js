@@ -941,7 +941,7 @@ app.get(
       ORDER BY questioncategoryid ASC
     `;
     }
-    console.error("query:", query, categoryId, name);
+   
     pool.query(query, [categoryId], (error, results) => {
       if (error) {
         console.error("Error fetching questions:", error);
@@ -958,7 +958,7 @@ app.get(
             answer_id,
             answer,
             fraction,
-            
+            tagid
           } = row;
 
           if (!questions[question_id]) {
@@ -969,7 +969,7 @@ app.get(
               question_type,
               answers: [],
               correct_answer: null,
-            
+              tagid
             };
           }
 
@@ -982,7 +982,7 @@ app.get(
 
           if (fraction === 1) {
             questions[question_id].correct_answer = answer_id;
-           // questions[question_id].tagid = tagid;
+            questions[question_id].tagid = tagid;
           }
         });
 
@@ -996,18 +996,13 @@ app.get(
 
 //API TO GET THE SOLUTION SET OF THE SELECTED QUESTIONS
 app.get("/api/generalfeedback", authenticationMiddleware, (req, res) => {
-  console.log("request", req);
-
   const questionIdsString = req.query.ids;
 
   if (!questionIdsString) {
     return res.status(400).json({ error: "Missing question IDs" });
   }
 
-  const questionIds = questionIdsString
-    .split(",")
-    .map((id) => parseInt(id, 10));
-  console.log("Question Id-", questionIds);
+  const questionIds = questionIdsString.split(",").map((id) => parseInt(id, 10));
 
   const responses = {}; // Use an object to store responses with their question IDs
 
@@ -1054,16 +1049,12 @@ app.get("/api/generalfeedback", authenticationMiddleware, (req, res) => {
 app.get("/api/tags", (req, res) => {
   // Fixed tag ID
   const tagname = req.query.tag;
-  console.log(tagname);
   if (tagname == "easy") {
     var tagId = 10;
-    console.log("tagid", tagId);
   } else if (tagname == "medium") {
-    var tagId = 14;
-    console.log("tagid", tagId);
+    var tagId = 14;    
   } else if (tagname == "hard") {
-    var tagId = 17;
-    console.log("tagid", tagId);
+    var tagId = 17;    
   } else {
     console.log("tag id cannot be set as tagname is not available");
   }
@@ -1077,10 +1068,8 @@ app.get("/api/tags", (req, res) => {
   `;
 console.log('tag query', query);
   // Execute the SQL query with the fixed tag ID
-  pool.query(query, [tagId], (error, results) => {
-    console.log('tag query 1', query);
-    if (error) {
-      console.error("Error fetching data:", error);
+  pool.query(query, [tagId], (error, results) => {    
+    if (error) {      
       res.status(500).json({ error: "Internal Server Error" });
     } else {
       res.json(results);
@@ -1094,8 +1083,7 @@ app.get("/api/checksavedquiz", authenticationMiddleware, (req, res) => {
 
   const query = "SELECT * FROM savedquiz WHERE username = ?";
   pool.query(query, [username], (err, result) => {
-    if (err) {
-      console.error("Error retrieving quizzes:", err);
+    if (err) {     
       res.status(500).json({ error: "Failed to retrieve quizzes" });
       return;
     }

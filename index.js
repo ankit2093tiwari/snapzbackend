@@ -919,22 +919,24 @@ app.get(
           JOIN category_hierarchy h ON c.parent = h.id
       )
       SELECT q.id AS question_id, q.name AS questionName, q.questiontext AS question_text, q.qtype AS question_type,
-      a.id AS answer_id, a.answer, a.fraction
+      a.id AS answer_id, a.answer, a.fraction, ti.tagid 
       FROM mdl8m_question_bank_entries mqbe
       INNER JOIN mdl8m_question_versions mqv ON mqbe.id = mqv.questionbankentryid
       INNER JOIN mdl8m_question q ON q.id = mqv.questionid
       INNER JOIN mdl8m_question_categories mqc ON mqc.id = mqbe.questioncategoryid
       LEFT JOIN mdl8m_question_answers a ON a.question = q.id
+      JOIN mdl8m_tag_instance ti ON ti.itemid = q.id  
       WHERE mqc.id IN (SELECT id FROM category_hierarchy) AND q.qtype = 'multichoice'`;
     } else if (name.startsWith("article")) {
       query = `
       SELECT q.id AS question_id,q.name AS questionName , q.questiontext AS question_text, q.qtype AS question_type,
-      a.id AS answer_id, a.answer, a.fraction
+      a.id AS answer_id, a.answer, a.fraction, ti.tagid 
       FROM mdl8m_question_bank_entries AS mqbe
       INNER JOIN mdl8m_question_versions AS mqv ON mqbe.id = mqv.questionbankentryid
       INNER JOIN mdl8m_question AS q ON q.id = mqv.questionid
       INNER JOIN mdl8m_question_categories AS mqc ON mqc.id = mqbe.questioncategoryid
       LEFT JOIN mdl8m_question_answers AS a ON a.question = q.id 
+      JOIN mdl8m_tag_instance ti ON ti.itemid = q.id  
       WHERE mqc.id = ? AND q.qtype = 'multichoice'
       ORDER BY questioncategoryid ASC
     `;

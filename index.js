@@ -1058,7 +1058,7 @@ app.get("/api/tags", (req, res) => {
     JOIN mdl8m_tag_instance ti ON ti.itemid = q.id 
     WHERE ti.tagid = ?;
   `;
-console.log('tag query', query);
+console.log('tag query', query,tagId );
   // Execute the SQL query with the fixed tag ID
   pool.query(query, [tagId], (error, results) => {    
     if (error) {      

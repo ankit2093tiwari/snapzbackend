@@ -1053,7 +1053,7 @@ app.get("/api/tags", (req, res) => {
 
   // Construct the SQL query
   const query = `
-    SELECT q.id AS question_id, q.questiontext AS question_text
+    SELECT q.id AS question_id, q.questiontext AS question_text, ti.itemid
     FROM mdl8m_question q
     JOIN mdl8m_tag_instance ti ON ti.itemid = q.id 
     WHERE ti.tagid = ?;

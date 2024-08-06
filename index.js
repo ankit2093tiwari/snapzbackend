@@ -595,7 +595,7 @@ app.get(
     WHERE mqc.id = ?
     ORDER BY questioncategoryid ASC
   `;
-
+    console.log('api/article/category', query, 'categoryId', categoryId)
     pool.query(query, [categoryId], (error, results) => {
       if (error) {
         console.error("Error fetching questions:", error);

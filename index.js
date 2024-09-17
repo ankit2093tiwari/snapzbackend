@@ -324,10 +324,10 @@ app.post("/api/saveQuiz", authenticationMiddleware, (req, res) => {
 
   const name = username;
 
-  const quizData = [ [quizLowerCaseName, questionIdsString, timestamp, name, num, title], ];
+  const quizData = [ [quizLowerCaseName, questionIdsString, timestamp, name, num, title, quiz_year], ];
 
   const query =
-    "INSERT INTO savedquiz (quiz_name, question_ids, timestamp,username,number,title) VALUES ?";
+    "INSERT INTO savedquiz (quiz_name, question_ids, timestamp,username,number,title, quiz_year) VALUES ?";
 
   console.log('quizData', quizData);
   console.log('query', query);

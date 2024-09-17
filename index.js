@@ -316,8 +316,7 @@ app.get("/api/deleteSavedDraft/:id", authenticationMiddleware, (req, res) => {
 // API TO SAVE QUIZ
 app.post("/api/saveQuiz", authenticationMiddleware, (req, res) => {
   console.log("Save API Hit");
-  const { quizName, questionIds, number_ques, title, username, Date } =
-    req.body;
+  const { quizName, questionIds, number_ques, title, username, Date, quiz_year } = req.body;
   const quizLowerCaseName = quizName.toLowerCase();
   const timestamp = Date;
   const questionIdsString = JSON.stringify(questionIds);
@@ -325,14 +324,13 @@ app.post("/api/saveQuiz", authenticationMiddleware, (req, res) => {
 
   const name = username;
 
-  const quizData = [
-    [quizLowerCaseName, questionIdsString, timestamp, name, num, title],
-  ];
+  const quizData = [ [quizLowerCaseName, questionIdsString, timestamp, name, num, title], ];
 
   const query =
     "INSERT INTO savedquiz (quiz_name, question_ids, timestamp,username,number,title) VALUES ?";
 
-  console.log(quizData);
+  console.log('quizData', quizData);
+  console.log('query', query);
   pool.query(query, [quizData], (err, result) => {
     if (err) {
       console.log("Error saving the quiz:", err);

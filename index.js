@@ -915,7 +915,7 @@ app.get(
       INNER JOIN mdl8m_question_categories mqc ON mqc.id = mqbe.questioncategoryid
       LEFT JOIN mdl8m_question_answers a ON a.question = q.id
       JOIN mdl8m_tag_instance ti ON ti.itemid = q.id  
-      WHERE mqc.id IN (SELECT id FROM category_hierarchy) AND q.qtype = 'multichoice'`;
+      WHERE mqc.id IN (SELECT id FROM category_hierarchy) AND q.qtype = 'multichoice' AND ti.tagid` IN (10, 14, 17);
     } else if (name.startsWith("article")) {
       query = `
       SELECT q.id AS question_id,q.name AS questionName , q.questiontext AS question_text, q.qtype AS question_type,
@@ -926,7 +926,7 @@ app.get(
       INNER JOIN mdl8m_question_categories AS mqc ON mqc.id = mqbe.questioncategoryid
       LEFT JOIN mdl8m_question_answers AS a ON a.question = q.id 
       JOIN mdl8m_tag_instance ti ON ti.itemid = q.id  
-      WHERE mqc.id = ? AND q.qtype = 'multichoice'
+      WHERE mqc.id = ? AND q.qtype = 'multichoice' AND ti.tagid` IN (10, 14, 17) 
       ORDER BY questioncategoryid ASC
     `;
     }

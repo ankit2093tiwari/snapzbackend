@@ -652,7 +652,7 @@ app.get("/api/questions/random", authenticationMiddleware, (req, res) => {
     FROM mdl8m_question q
     JOIN mdl8m_question_answers a ON q.id = a.question
     JOIN mdl8m_tag_instance ti ON ti.itemid = q.id 
-    WHERE a.fraction >= 0
+    WHERE a.fraction >= 0 AND ti.tagid IN (10, 14, 17)
   `;
 
   pool.query(query, (error, results) => {
@@ -1053,9 +1053,8 @@ app.get("/api/tags", (req, res) => {
     SELECT q.id AS question_id, q.questiontext AS question_text, ti.tagid 
     FROM mdl8m_question q
     JOIN mdl8m_tag_instance ti ON ti.itemid = q.id 
-    WHERE ti.tagid = ?;
+    WHERE ti.tagid = ? AND ti.tagid IN (10, 14, 17);
   `;
-console.log('tag query', query,tagId );
   // Execute the SQL query with the fixed tag ID
   pool.query(query, [tagId], (error, results) => {    
     if (error) {      

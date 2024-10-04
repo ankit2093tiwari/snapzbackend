@@ -340,6 +340,35 @@ app.post("/api/saveQuiz", authenticationMiddleware, (req, res) => {
   });
 });
 
+// API TO SAVE QUIZ
+app.post("/api/updateQuiz", authenticationMiddleware, (req, res) => {
+
+  const { quizName, questionIds, number_ques, title, username, Date, quiz_year, id } = req.body;
+  if (!id ) {
+        return res.status(400).json({ error: 'Quiz is required.' });
+  }
+  const quizLowerCaseName = quizName.toLowerCase();
+  const timestamp = Date;
+  const questionIdsString = JSON.stringify(questionIds);
+  const num = number_ques;
+
+  const name = username;
+
+  const quizData = [ [quizLowerCaseName, questionIdsString, timestamp, name, num, title, quiz_year, id]];
+
+  const query = "UPDATE savedquiz SET quiz_name=?, question_ids=?, timestamp=?,username=?,number=?,title=?, quiz_year=?  WHERE id = ? ";
+
+  
+  pool.query(query, [quizData], (err, result) => {
+    if (err) {
+      console.log("Error saving the quiz:", err);
+      res.status(500).json({ error: "Failed to save the quiz" });
+      return;
+    }
+    res.status(200).json({ message: "Quiz saved successfully" });
+  });
+});
+
 // API FOR GETTING ALL THE SAVED QUIZ DRAFTS FROM DATABASE
 app.get("/getAllQuizzes", authenticationMiddleware, (req, res) => {
   const username = req.query.name;

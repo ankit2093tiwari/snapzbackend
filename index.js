@@ -353,13 +353,13 @@ app.post("/api/updateQuiz", authenticationMiddleware, (req, res) => {
   const num = number_ques;
 
   const name = username;
+ 
+  const query = "UPDATE savedquiz SET quiz_name= ?, question_ids= ?, timestamp= ?,username=?,number=?,title=?, quiz_year=?  WHERE id = ? ";
 
-  const quizData = [quizLowerCaseName, questionIdsString, timestamp, name, num, title, quiz_year, id];
-
-  const query = "UPDATE savedquiz SET quiz_name=?, question_ids=?, timestamp=?,username=?,number=?,title=?, quiz_year=?  WHERE id = ? ";
-
+  const quizData = [quizLowerCaseName, questionIdsString, timestamp, name, num, title, quiz_year, id];  
   
-  pool.query( query, [quizData], (err, result) => {
+ /* pool.query( query, [quizData], (err, result) => { */
+  pool.query(query, [quizLowerCaseName, questionIdsString, timestamp, name, num, title, quiz_year, id], (err, results) => {
     if (err) {
       console.log("Error saving the quiz:", err);
       res.status(500).json({ error: "Failed to save the quiz" });

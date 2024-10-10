@@ -354,7 +354,7 @@ app.post("/api/updateQuiz", authenticationMiddleware, (req, res) => {
 
   const name = username;
 
-  const quizData = [ [quizLowerCaseName, questionIdsString, timestamp, name, num, title, quiz_year, id]];
+  const quizData = [quizLowerCaseName, questionIdsString, timestamp, name, num, title, quiz_year, id];
 
   const query = "UPDATE savedquiz SET quiz_name=?, question_ids=?, timestamp=?,username=?,number=?,title=?, quiz_year=?  WHERE id = ? ";
 
